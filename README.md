@@ -1,4 +1,4 @@
-#site - https://fugiog.github.io/react-Marvel-homepage
+# site - https://fugiog.github.io/react-Marvel-homepage
 
 # Getting Started with Create React App
 
