@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import './charList.scss';
 import MarvelService from '../../services/MarvelService';
 import ErrorMessage from '../errorMessage/errorMessage';
@@ -14,6 +16,8 @@ class CharList extends Component{
         charEnded: false,
         limit: 9,
     }
+
+    itemRefs = []
 
     marvelService = new MarvelService();
 
@@ -59,8 +63,18 @@ class CharList extends Component{
 
     }
 
+    setRefs = (elem) => {
+        this.itemRefs.push(elem);
+    }
+
+    focusOnItem = (id) => {
+        this.itemRefs.forEach(item => item.classList.remove('char__item_selected'));
+        this.itemRefs[id].classList.add('char__item_selected');
+        this.itemRefs[id].focus();
+    }
+
     renderItems (arr) {
-        const elements = arr.map(item => {
+        const elements = arr.map((item, index)=> {
             const {name, thumbnail, id} = item;
 
             let imgStyle = null;
@@ -69,7 +83,15 @@ class CharList extends Component{
             }
 
             return (
-                <li className="char__item" key={id} onClick={() => this.props.onCharSelected(id)}>
+                <li ref={this.setRefs} 
+                    className="char__item" 
+                    key={id} 
+                    onClick={() => {
+                        this.props.onCharSelected(id)
+                        this.focusOnItem(index)
+                    }}
+                    tabIndex={0}>
+
                     <img src={thumbnail} alt={name} style={imgStyle}/>
                     <div className="char__name">{name}</div>
                 </li>
@@ -107,6 +129,10 @@ class CharList extends Component{
             </div>
         )
     }
+}
+
+CharList.propTypes = {
+    onCharSelected: PropTypes.func.isRequired
 }
 
 export default CharList;
