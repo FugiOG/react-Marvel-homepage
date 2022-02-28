@@ -1,23 +1,25 @@
 {
   "files": {
-    "main.css": "/react-Marvel-homepage/static/css/main.2d2dff84.chunk.css",
-    "main.js": "/react-Marvel-homepage/static/js/main.d79bed9c.chunk.js",
-    "main.js.map": "/react-Marvel-homepage/static/js/main.d79bed9c.chunk.js.map",
+    "main.css": "/react-Marvel-homepage/static/css/main.6ebced33.chunk.css",
+    "main.js": "/react-Marvel-homepage/static/js/main.2e28884f.chunk.js",
+    "main.js.map": "/react-Marvel-homepage/static/js/main.2e28884f.chunk.js.map",
     "runtime-main.js": "/react-Marvel-homepage/static/js/runtime-main.5fe6ebcb.js",
     "runtime-main.js.map": "/react-Marvel-homepage/static/js/runtime-main.5fe6ebcb.js.map",
-    "static/js/2.2b6efd15.chunk.js": "/react-Marvel-homepage/static/js/2.2b6efd15.chunk.js",
-    "static/js/2.2b6efd15.chunk.js.map": "/react-Marvel-homepage/static/js/2.2b6efd15.chunk.js.map",
+    "static/js/2.25b38c83.chunk.js": "/react-Marvel-homepage/static/js/2.25b38c83.chunk.js",
+    "static/js/2.25b38c83.chunk.js.map": "/react-Marvel-homepage/static/js/2.25b38c83.chunk.js.map",
     "index.html": "/react-Marvel-homepage/index.html",
-    "static/css/main.2d2dff84.chunk.css.map": "/react-Marvel-homepage/static/css/main.2d2dff84.chunk.css.map",
-    "static/js/2.2b6efd15.chunk.js.LICENSE.txt": "/react-Marvel-homepage/static/js/2.2b6efd15.chunk.js.LICENSE.txt",
+    "static/css/main.6ebced33.chunk.css.map": "/react-Marvel-homepage/static/css/main.6ebced33.chunk.css.map",
+    "static/js/2.25b38c83.chunk.js.LICENSE.txt": "/react-Marvel-homepage/static/js/2.25b38c83.chunk.js.LICENSE.txt",
+    "static/media/Avengers.4065c8f9.png": "/react-Marvel-homepage/static/media/Avengers.4065c8f9.png",
+    "static/media/Avengers_logo.9eaf2193.png": "/react-Marvel-homepage/static/media/Avengers_logo.9eaf2193.png",
     "static/media/error.42292aa1.gif": "/react-Marvel-homepage/static/media/error.42292aa1.gif",
     "static/media/mjolnir.61f31e18.png": "/react-Marvel-homepage/static/media/mjolnir.61f31e18.png",
     "static/media/vision.067d4ae1.png": "/react-Marvel-homepage/static/media/vision.067d4ae1.png"
   },
   "entrypoints": [
     "static/js/runtime-main.5fe6ebcb.js",
-    "static/js/2.2b6efd15.chunk.js",
-    "static/css/main.2d2dff84.chunk.css",
-    "static/js/main.d79bed9c.chunk.js"
+    "static/js/2.25b38c83.chunk.js",
+    "static/css/main.6ebced33.chunk.css",
+    "static/js/main.2e28884f.chunk.js"
   ]
 }
