@@ -15,6 +15,11 @@ const useMarvelService = () => {
         return res.data.results.map(_transformComics);
     }
 
+    const getComic = async (id) => {
+        const res = await request(`${_apiBase}comics/${id}?${_apiKey}`);
+        return _transformComics(res.data.results[0]);
+    }
+
     const getAllCharacters = async (offset = _baseOffset, limit = _baseLimit) => {
         const res = await request(`${_apiBase}characters?limit=${limit}&offset=${offset}&${_apiKey}`);
         return res.data.results.map(_transformCharacter);
@@ -25,15 +30,22 @@ const useMarvelService = () => {
         return _transformCharacter(res.data.results[0]);
     }
 
+    const getCharacterByName = async (name) => {
+        const res = await request(`${_apiBase}characters?name=${name}&${_apiKey}`)
+        return res.data.results.map(_transformCharacter);
+    }
+
     const _transformCharacter = (char) => {
         return {
             name: char.name,
             description: char.description ? `${char.description.slice(0, 210)}...` : 'description is missing',
+            fullDescription: char.description || 'description is missing',
             thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,
             homepage: char.urls[0].url,
             wiki: char.urls[1].url,
             id: char.id,
-            comics: char.comics.items
+            comics: char.comics.items,
+            comicsId: char.comics.items.map(item => item.resourceURI.slice(-5))
         }
     }
 
@@ -42,14 +54,14 @@ const useMarvelService = () => {
             id: comics.id,
             title: comics.title,
             description: comics.description,
-            price: comics.prices[0].price ? `${comics.prices[0].price}$` : 'not available',
+            price: comics.prices.price ? `${comics.prices.price}$` : 'not available',
             thumbnail: `${comics.thumbnail.path}.${comics.thumbnail.extension}`,
             pageCount: comics.pageCount ? `${comics.pageCount} p.` : 'No information about the number of pages',
             language: comics.textObjects.language || 'en-us'
         }
     }
 
-    return {loading, error, getAllCharacters, getCharacters, clearError, getAllComics}
+    return {loading, error, getAllCharacters, getCharacters, clearError, getAllComics, getComic, getCharacterByName}
 }
 
 export default useMarvelService;

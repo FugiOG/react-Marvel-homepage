@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import './charInfo.scss';
@@ -33,7 +34,6 @@ const CharInfo = (props) => {
             .then(onCharLoaded);
     }
 
-
     const skeleton = (loading || error || char) ? null : <Skeleton/>;
     const spinner = loading ? <Spinner/> : null;
     const errorMessage = error ? <ErrorMessage/> : null;
@@ -50,7 +50,8 @@ const CharInfo = (props) => {
 }
 
 const View = ({char}) => {
-    const {name, description, thumbnail, homepage, wiki, comics} = char;
+
+    const {name, description, thumbnail, homepage, wiki, comics, comicsId} = char;
 
     let imgStyle = null;
     if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'){
@@ -86,7 +87,7 @@ const View = ({char}) => {
                         }
                         return (
                             <li key={i} className="char__comics-item">
-                                {item.name}
+                                <Link to={`/comics/${comicsId[i]}`}>{item.name}</Link>
                             </li>
                         )
                     })
