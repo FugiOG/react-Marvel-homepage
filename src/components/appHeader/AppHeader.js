@@ -18,7 +18,7 @@ const AppHeader = () => {
                     /
                     <li><NavLink  
                     style={({isActive}) => ({'color': isActive ? '#9F0013' : '#232222'})}  
-                    to="/react-Marvel-homepage/comics">Comics</NavLink></li>
+                    to="/react-Marvel-homepage/comics/">Comics</NavLink></li>
                 </ul>
             </nav>
         </header>
