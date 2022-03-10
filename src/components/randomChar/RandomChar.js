@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react';
 import './randomChar.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
 import useMarvelService from '../../services/MarvelService';
-import Spinner from '../spinner/spinner';
-import ErrorMessage from '../errorMessage/errorMessage';
+import setContent from '../../utils/setContent';
 
 const RandomChar = () => {
     const [char, setChar] = useState({});
-    const {loading, error, getCharacters, clearError} = useMarvelService();
+    const {getCharacters, clearError, process, setProcess} = useMarvelService();
 
     useEffect(() => {
         updateChar();
+        // eslint-disable-next-line
     }, [])
 
     const onCharLoaded = (char) => {
@@ -23,18 +23,13 @@ const RandomChar = () => {
         clearError();
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
         getCharacters(id)
-            .then(onCharLoaded);
+            .then(onCharLoaded)
+            .then(() => setProcess('confirmed'));
     }
-    
-    const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading ? <Spinner/> : null;
-    const content = error || loading ? null : <View char={char}/> 
 
     return (
         <div className="randomchar">
-            {errorMessage} 
-            {spinner}
-            {content}
+            {setContent(process, View, char)}
             <div className="randomchar__static">
                 <p className="randomchar__title">
                     Random character for today!<br/>
@@ -46,7 +41,7 @@ const RandomChar = () => {
                 <button 
                     onClick={updateChar} 
                     className="button button__main"
-                    disabled={loading}>
+                    disabled={process === 'loading'}>
                     <div className="inner">try it</div>
                 </button>
                 <img src={mjolnir} alt="mjolnir" className="randomchar__decoration"/>
@@ -55,8 +50,8 @@ const RandomChar = () => {
     )
 }
 
-const View = ({char}) => {
-    const {name, description, thumbnail, homepage, wiki} = char;
+const View = ({data}) => {
+    const {name, description, thumbnail, homepage, wiki} = data;
     let imgStyle = null;
     if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'){
         imgStyle = {objectFit: "contain"};

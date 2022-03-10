@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
@@ -6,6 +6,21 @@ import './charList.scss';
 import useMarvelService from '../../services/MarvelService';
 import ErrorMessage from '../errorMessage/errorMessage';
 import Spinner from '../spinner/spinner';
+
+const setContent = (process, Component, newItemLoading) => {
+    switch (process){
+        case 'waiting':
+            return <Spinner/>;
+        case 'loading':
+            return newItemLoading ? <Component/> : <Spinner/>;
+        case 'confirmed':
+            return <Component/>;
+        case 'error':
+            return <ErrorMessage/>;
+        default: 
+            throw new Error('Unexpected process state');
+    }
+}
 
 const CharList = (props) => {
 
@@ -15,16 +30,18 @@ const CharList = (props) => {
     const [charEnded, setCharEnded] = useState(false);
     const [limit, setLimit] = useState(9);
 
-    const {loading, error, getAllCharacters} = useMarvelService();
+    const {getAllCharacters, process, setProcess} = useMarvelService();
 
     useEffect(() => {
         onRequest(offset, limit, true);
+        // eslint-disable-next-line
     }, [])
 
     const onRequest = (offset, limit, initial) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true);
         getAllCharacters(offset, limit)
-            .then(onCharListLoaded);
+            .then(onCharListLoaded)
+            .then(() => setProcess('confirmed'));
     }
 
     const onCharListLoaded = (newCharacters) => {
@@ -70,6 +87,13 @@ const CharList = (props) => {
                             props.onCharSelected(id)
                             focusOnItem(index)
                         }}
+                        onKeyPress={(e) => {
+                            if (e.key === ' ' || e.key === 'Enter'){
+                                props.onCharSelected(id)
+                                focusOnItem(index)
+                            }
+
+                        }}
                         tabIndex={0}>
                             <img src={thumbnail} alt={name} style={imgStyle}/>
                             <div className="char__name">{name}</div>
@@ -88,15 +112,13 @@ const CharList = (props) => {
         )
     }
 
-    const elements = renderItems(characters);
-    
-    const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading && !newItemLoading ? <Spinner/> : null;
+    const elements = useMemo(() => {
+        return setContent(process, () => renderItems(characters), newItemLoading)
+        // eslint-disable-next-line
+    }, [process])
 
     return (
         <div className="char__list">
-            {errorMessage}
-            {spinner}
             {elements}
             <button 
                 className="button button__main button__long"
